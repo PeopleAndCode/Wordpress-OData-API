@@ -11,11 +11,13 @@ Author URI: http://peopleandcode.com
 $dir = pc_odata_api_dir();
 
 function pc_odata_api_init() {
-	global $pc_odata_api;
+	global $pc_odata_api, $wp_rewrite;
 	if (phpversion() < 5) {
 		add_action('admin_notices', 'pc_odata_api_php_version_warning');
 		return;
 	}
+	add_filter('rewrite_rules_array', 'pc_odata_api_rewrites');
+	$wp_rewrite->flush_rules();
 }
 add_action('init', 'pc_odata_api_init');
 
@@ -31,53 +33,58 @@ function pc_odata_api_php_version_warning(){
 	echo "<div id='odata-api-warning' class='updated fade'><p>Sorry, odata API requires PHP version 5.0 or greater.</p></div>";
 }
 
-// function pandc_odata_add_endpoint() {
-// 	add_rewrite_endpoint( 'OData', EP_PERMALINK );
-// }
-// add_action( 'init', 'pandc_odata_add_endpoint' );
-
-function wpa5413_init() {
-    // Remember to flush the rules once manually after you added this code!
-    add_rewrite_rule(
-        '^OData/OData.svc',
-        'index.php?pagename=$matches[1]',
-        'top' );
+function pc_odata_api_rewrites($wp_rules) {
+	$odata_api_rules = array(
+	"^OData\$" => 'index.php?plugin_page=OData'
+	);
+	return array_merge($odata_api_rules, $wp_rules);
+	
 }
-add_action( 'init', 'wpa5413_init' );
-
-function wpa5413_query_vars( $query_vars ) {
-    $query_vars[] = 'OData';
-    $query_vars[] = 'somethingelse';
-    return $query_vars;
-}
-add_filter( 'query_vars', 'wpa5413_query_vars' );
 
 function pandc_odata_template_redirect() {
-    global $wp_query;
- 
-    // if this is not a request for odata or a singular object then bail
-    if ( $wp_query->get('OData') ):
-        
-	    // include custom template
-	    include $dir . 'templates/odata-template.php';
-	    exit;
-    endif;
+	global $wp_query;
+
+	if ( $overridden_template = locate_template( 'page-OData.php' ) ) {
+		// locate_template() returns path to file
+		// if either the child theme or the parent theme have overridden the template
+		load_template( $overridden_template );
+	} else {
+		// // if this is not a request for odata or a singular object then bail
+		// if ( $wp_query->get('OData') ):
+		// 	// include custom template
+			include($dir . 'templates/odata-template.php');
+			exit;
+		// endif;
+	}
 }
 add_action( 'template_redirect', 'pandc_odata_template_redirect' );
 
 function pandc_odata_endpoints_activate() {
-        // ensure our endpoint is added before flushing rewrite rules
-        wpa5413_init();
-        // flush rewrite rules - only do this on activation as anything more frequent is bad!
-        flush_rewrite_rules();
+  global $wp_rewrite;
+  add_filter('rewrite_rules_array', 'pc_odata_api_rewrites');
+  $wp_rewrite->flush_rules();
 }
 register_activation_hook( __FILE__, 'pandc_odata_endpoints_activate' );
 
 function pandc_odata_endpoints_deactivate() {
-        // flush rules on deactivate as well so they're not left hanging around uselessly
-        flush_rewrite_rules();
+	global $wp_rewrite;
+	$wp_rewrite->flush_rules();
 }
 register_deactivation_hook( __FILE__, 'pandc_odata_endpoints_deactivate' );
 
+function plugin_myown_content() {
+  $return = '<p>OData Page Plugin</p>';
+  return $return;
+}
+
+function plugin_myown_title() {
+  return "On the fly foobar form";
+}
+
+if ($_GET['plugin_page'] == "OData") {
+  add_filter('the_title', 'plugin_myown_title');
+  add_filter('the_content', 'plugin_myown_content');
+  add_action('template_redirect', 'pandc_odata_template_redirect');
+}
 
 ?>
