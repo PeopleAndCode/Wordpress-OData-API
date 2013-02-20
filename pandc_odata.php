@@ -18,7 +18,7 @@ function pc_odata_api_init() {
 	}
 	add_filter('rewrite_rules_array', 'pc_odata_api_rewrites');
 	$wp_rewrite->flush_rules();
-}
+}	
 add_action('init', 'pc_odata_api_init');
 
 function pc_odata_api_dir() {
@@ -35,26 +35,31 @@ function pc_odata_api_php_version_warning(){
 
 function pc_odata_api_rewrites($wp_rules) {
 	$odata_api_rules = array(
-	"^OData\$" => 'index.php?plugin_page=OData'
+	"OData/([^/]+)/?" => 'index.php?odata=$matches[1]'
 	);
 	return array_merge($odata_api_rules, $wp_rules);
 	
 }
 
-function pandc_odata_template_redirect() {
-	global $wp_query;
+function my_insert_query_vars( $vars ) {
+    $vars[] = 'odata';
+    return $vars;
+}
+add_filter( 'query_vars','my_insert_query_vars' );
 
-	if ( $overridden_template = locate_template( 'page-OData.php' ) ) {
-		// locate_template() returns path to file
-		// if either the child theme or the parent theme have overridden the template
-		load_template( $overridden_template );
-	} else {
-		// // if this is not a request for odata or a singular object then bail
-		// if ( $wp_query->get('OData') ):
-		// 	// include custom template
+function pandc_odata_template_redirect() {
+	$odata_query = get_query_var('odata');
+	if ($odata_query == 'OData.svc') {
+		if ( $overridden_template = locate_template( 'page-OData.php' ) ) {
+			// locate_template() returns path to file
+			// if either the child theme or the parent theme have overridden the template
+			load_template( $overridden_template );
+		} else {
+			// if this is not a request for odata or a singular object then bail
+			// include custom template
 			include($dir . 'templates/odata-template.php');
-			exit;
-		// endif;
+			exit();
+		}
 	}
 }
 add_action( 'template_redirect', 'pandc_odata_template_redirect' );
@@ -67,8 +72,8 @@ function pandc_odata_endpoints_activate() {
 register_activation_hook( __FILE__, 'pandc_odata_endpoints_activate' );
 
 function pandc_odata_endpoints_deactivate() {
-	global $wp_rewrite;
-	$wp_rewrite->flush_rules();
+	remove_filter('rewrite_rules_array', 'pc_odata_api_rewrites');
+	flush_rewrite_rules();
 }
 register_deactivation_hook( __FILE__, 'pandc_odata_endpoints_deactivate' );
 
@@ -81,10 +86,10 @@ function plugin_myown_title() {
   return "On the fly foobar form";
 }
 
-if ($_GET['plugin_page'] == "OData") {
-  add_filter('the_title', 'plugin_myown_title');
-  add_filter('the_content', 'plugin_myown_content');
-  add_action('template_redirect', 'pandc_odata_template_redirect');
-}
+// if ($_GET['odata'] == "OData.svc") {
+//   add_filter('the_title', 'plugin_myown_title');
+//   add_filter('the_content', 'plugin_myown_content');
+//   add_action('template_redirect', 'pandc_odata_template_redirect');
+// }
 
 ?>
