@@ -1,7 +1,7 @@
 <?php
 
-Class Posts_Controller() {
-	
+Class Posts_Controller {
+
 }
 
 ?>
