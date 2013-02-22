@@ -10,11 +10,16 @@ Class Entities_Controller {
 	
 	function show(){
 		global $odata_dir;
+		global $odata_api_url_base;
+		$id = $this->id;
+		$entitySet = &$this->entitySet;
+		$category = get_the_category(); 
+
 		$args = array(
 			'post_status' => 'publish',
-			'post_type' => $this->entitySet,
+			'post_type' => strtolower($entitySet),
 			'posts_per_page' => '1',
-			'p' => $this->id
+			'p' => $id
 		);
 		$post_object = query_posts($args);
 
