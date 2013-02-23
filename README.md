@@ -1,6 +1,6 @@
 # OData API for Wordpress by People & Code Inc.
 
-This plugin is designed to generate an OData API interface for any Wordpress powered website.
+This plugin is currently designed to generate a Read-only OData API interface for any Wordpress powered website.
 
 The plugin tries to:
 
