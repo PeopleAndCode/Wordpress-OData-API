@@ -9,6 +9,11 @@ The plugin tries to:
 3. Allow an easy way to override default templates included with the plugin should the Protocol change or require customizations
 4. Allows Wordpress methods and functions used in "The Loop" to be used.
 
+## Requirements
+
+1. Mod_Rewite is enabled properly
+2. Permalinks are set to anything but the default setting. The plugin reqiures hitting the URI of /OData/OData.svc at a minimum so the default won't work unless your links are pointing to index.php?odata=OData.svc
+
 ## Endpoints
 
 ````
