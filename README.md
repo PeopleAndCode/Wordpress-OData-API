@@ -3,6 +3,7 @@
 This plugin is designed to generate an OData API interface for any Wordpress powered website.
 
 The plugin tries to:
+
 1. Follow OData terminology for its parameters.
 2. Follow a pseudo MVC pattern and routing for endpoints
 3. Allow an easy way to override default templates included with the plugin should the Protocol change or require customizations
