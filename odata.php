@@ -24,7 +24,6 @@ Class OData  {
 				OData_Controller::template_redirect();
 			} else {
 				echo 'error';
-				exit();
 			}
 		}
 	}
