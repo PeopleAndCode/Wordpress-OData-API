@@ -17,15 +17,17 @@ http://<blogurl>/OData/OData.svc/<entitySet>/ => index.php?odata=OData.svc&entit
 http://<blogurl>/OData/OData.svc/<entitySet>(<entityID>)/ => index.php?odata=OData.svc&entitySet=<entitySet>&entityID=<entityID>
 ````
 **NOTE:**
+
 `<entitySets>` *SHOULD* take their plural forms.  Meaning the default Wordpress `post_type` is `post` BUT the `<entitySet>` should be written as `Posts` or `posts` *NOT* `Post` or `post`.  Same goes for `post_type` of `Page`.
 
 **Why?**
+
 It's to follow the idea of collections or `entitySets` as they represent multiple `entries`.
 
 
 ## Templates
 
-You can think of templates here as the view layer in an MVC-ish way. The controllers will generate the appropriate `query_posts()` with `$args`.  It hasn't been implemented yet but the templates will in the future reflect the Methods name.  Therefore if Entities Controller (`\controllers\entities_controller.php`) has a method `show()` (which it does) should have a corresponding template/view file named `show.php` in the `\templates\entities\` folder.
+You can think of templates here as the view layer in an MVC-ish way. The controllers will generate the appropriate `query_posts()` with `$args`.  It hasn't been implemented yet but the templates will in the future reflect the Methods name.  Therefore if the *Entities Controller* (`\controllers\entities_controller.php`) has a method `show()` (which it does), it should have a corresponding template/view file named `show.php` in the `\templates\entities\` folder.
 
 ## Plugin included defaults
 
@@ -47,8 +49,3 @@ You can override the default templates included with the plugin by createing you
 			- `show.php` (replaces `http://<blogurl>/OData/OData.svc/<entitySet>/`)
 		- entities
 			- `show.php` (replaces `http://<blogurl>/OData/OData.svc/<entitySet>(entityID)/`)
-
-## Notes
-
-### Post Type
-The default post type 
