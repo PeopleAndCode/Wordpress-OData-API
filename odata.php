@@ -19,10 +19,10 @@ Class OData  {
 			$entitySet->show();
 
 		} else {
-			if ($odataQuery == 'OData.svc') {
+			if ((isset($odataQuery)) && ($odataQuery == 'OData.svc')) {
 				OData_Controller::template_redirect();
-			} else {
-				echo 'error';
+			} elseif(isset($odataQuery) && !empty($odataQuery) ) {
+				echo "odata parameter is empty";
 				exit();
 			}
 		}
