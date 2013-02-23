@@ -16,10 +16,16 @@ http://<blogurl>/OData/OData.svc/ => index.php?odata=OData.svc
 http://<blogurl>/OData/OData.svc/<entitySet>/ => index.php?odata=OData.svc&entitySet=<entitySet>
 http://<blogurl>/OData/OData.svc/<entitySet>(<entityID>)/ => index.php?odata=OData.svc&entitySet=<entitySet>&entityID=<entityID>
 ````
+**NOTE:**
+`<entitySets>` *SHOULD* take their plural forms.  Meaning the default Wordpress `post_type` is `post` BUT the `<entitySet>` should be written as `Posts` or `posts` *NOT* `Post` or `post`.  Same goes for `post_type` of `Page`.
+
+**Why?**
+It's to follow the idea of collections or `entitySets` as they represent multiple `entries`.
+
 
 ## Templates
 
-You can think of templates here as the view layer in an MVC-ish way. The controllers will generate the appropriate `query_posts()` with `$args`.  
+You can think of templates here as the view layer in an MVC-ish way. The controllers will generate the appropriate `query_posts()` with `$args`.  It hasn't been implemented yet but the templates will in the future reflect the Methods name.  Therefore if Entities Controller (`\controllers\entities_controller.php`) has a method `show()` (which it does) should have a corresponding template/view file named `show.php` in the `\templates\entities\` folder.
 
 ## Plugin included defaults
 
@@ -30,12 +36,19 @@ The templates (Views) that generate the OData payload by default are found in th
 3. entitysets (Generates Entity Set Views i.e. a Post Type, Page Type or Custom Post Type)
 
 ### Overriding default templates
-
-Template folder structure
+You can override the default templates included with the plugin by createing your own within a Wordpress theme.  Just add the following folders and files:
 
 - odata
 	- tempaltes
-	- defaults
-		- `<FileName>.php` (Example: `odata.svc.php`)
-	- `<ControllerName>` (Example: `entities` or `entitysets`)
-		- `<ControllerMethod>` (Example: `index.php` or `show.php` for the index or show method in the class)
+		- defaults
+			- `odata.svc.php` (replaces `http://<blogurl>/OData/OData.svc/`)
+			- `odata_error_no_data_found.php` (replaces the default error page)
+		- entitysets
+			- `show.php` (replaces `http://<blogurl>/OData/OData.svc/<entitySet>/`)
+		- entities
+			- `show.php` (replaces `http://<blogurl>/OData/OData.svc/<entitySet>(entityID)/`)
+
+## Notes
+
+### Post Type
+The default post type 
