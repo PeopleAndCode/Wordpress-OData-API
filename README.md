@@ -36,6 +36,6 @@ Template folder structure
 - odata
 	- tempaltes
 	- defaults
-		- <FileName>.php (Example: odata.svc.php)
-	- <ControllerName>
-		- <ControllerMethod> (Example: index.php or show.php for the index or show method in the class)
+		- `<FileName>.php` (Example: `odata.svc.php`)
+	- `<ControllerName>` (Example: `entities` or `entitysets`)
+		- `<ControllerMethod>` (Example: `index.php` or `show.php` for the index or show method in the class)
