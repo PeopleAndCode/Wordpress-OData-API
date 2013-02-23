@@ -17,6 +17,7 @@ Class OData  {
 
 		} elseif(isset($entitySetName) && !empty($entitySetName)){
 			$entitySet = new EntitySets_Controller($entitySetName);
+			$entitySet->show();
 
 		} else {
 			if ($odataQuery == 'OData.svc') {

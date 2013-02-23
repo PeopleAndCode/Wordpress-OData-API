@@ -13,11 +13,20 @@ Class Entities_Controller {
 		global $odata_api_url_base;
 		$id = $this->id;
 		$entitySet = &$this->entitySet;
-		$category = get_the_category(); 
+		$post_type = strtolower($entitySet);
+
+		if( $post_type == 'post' || $post_type == 'page') {
+			// we don't want to accept URLs/Queries with Post||Page (singular) we want Posts||Pages
+			$post_type = 'odataForcePostTypeError';
+		} elseif ( $post_type == 'posts' ) {
+			$post_type = 'post';
+		} elseif ( $post_type == 'pages' ) {
+			$post_type = 'page';
+		}
 
 		$args = array(
 			'post_status' => 'publish',
-			'post_type' => strtolower($entitySet),
+			'post_type' => strtolower($post_type),
 			'posts_per_page' => '1',
 			'p' => $id
 		);
