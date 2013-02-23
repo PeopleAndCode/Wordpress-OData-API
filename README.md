@@ -11,8 +11,8 @@ The plugin tries to:
 
 ## Requirements
 
-1. Mod_Rewite is enabled properly
-2. Permalinks are set to anything but the default setting. The plugin reqiures hitting the URI of /OData/OData.svc at a minimum so the default won't work unless your links are pointing to index.php?odata=OData.svc
+1. Mod_Rewite is enabled (Pretty Standard Really...).
+2. *Permalinks* are set to **anything** but the default setting. The plugin reqiures hitting the URI of `/OData/OData.svc` at a minimum so the default won't work unless your links are pointing to `index.php?odata=OData.svc`.
 
 ## Endpoints
 
