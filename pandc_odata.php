@@ -10,7 +10,7 @@ Author URI: http://peopleandcode.com
 
 global $odata_dir;
 global $odata_api_url_base;
-$odata_api_url_base = 'http://' . get_bloginfo('url') . '/OData/OData.svc/';
+$odata_api_url_base = get_bloginfo('url') . '/OData/OData.svc/';
 $odata_dir = pc_odata_api_dir();
 
 include_once($odata_dir . '/' . 'controller'. '/' . 'entities_controller.php');
