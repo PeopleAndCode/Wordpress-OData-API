@@ -14,7 +14,6 @@ Class OData  {
 			$entity = new Entities_Controller($entityID, $entitySetName);
 			$entity->show();
 
-
 		} elseif(isset($entitySetName) && !empty($entitySetName)){
 			$entitySet = new EntitySets_Controller($entitySetName);
 			$entitySet->show();
@@ -24,6 +23,7 @@ Class OData  {
 				OData_Controller::template_redirect();
 			} else {
 				echo 'error';
+				exit();
 			}
 		}
 	}
