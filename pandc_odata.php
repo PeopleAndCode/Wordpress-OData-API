@@ -16,7 +16,7 @@ $odata_dir = pc_odata_api_dir();
 include_once($odata_dir . '/' . 'controller'. '/' . 'entities_controller.php');
 include_once($odata_dir . '/' . 'controller'. '/' . 'entitysets_controller.php');
 include_once($odata_dir . '/' . 'controller'. '/' . 'odata_controller.php');
-include_once($odata_dir . '/' . 'odata.php');
+include_once($odata_dir . '/' . 'route.php');
 
 function pc_odata_api_init() {
 	global $pc_odata_api, $wp_rewrite;
@@ -26,7 +26,7 @@ function pc_odata_api_init() {
 	}
 	add_filter('rewrite_rules_array', 'pc_odata_api_rewrites');
 	$wp_rewrite->flush_rules();
-	$odata_api = new OData();	
+	$odata_api = new Route();	
 }	
 add_action('init', 'pc_odata_api_init');
 

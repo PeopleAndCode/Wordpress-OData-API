@@ -2,7 +2,7 @@
 	header('Content-Type: application/xml');
 	echo '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>';
 ?>
-<feed xml:base="http://<?php bloginfo('url'); ?>/OData/OData.svc/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
+<feed xml:base="http://<?php echo $odata_api_url_base; ?>" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
 <id><?php echo $odata_api_url_base . $entitySet; ?></id>
 <title type="text"><?php echo $entitySet; ?></title>
 <link rel="self" title="<?php echo $entitySet; ?>" href="<?php echo "$entitySet"; ?>" />
