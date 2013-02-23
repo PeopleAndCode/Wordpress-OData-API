@@ -23,6 +23,7 @@ You can think of templates here as the view layer in an MVC-ish way. The control
 ## Plugin included defaults
 
 The templates (Views) that generate the OData payload by default are found in the templates directory.  Within this directory there are currently 3 subfolders:
+
 1. defaults (Generates Error Views)
 2. entities (Generates Entity Views i.e. an Indivdual Post)
 3. entitysets (Generates Entity Set Views i.e. a Post Type, Page Type or Custom Post Type)
