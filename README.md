@@ -34,8 +34,8 @@ The templates (Views) that generate the OData payload by default are found in th
 Template folder structure
 
 - odata
--- tempaltes
--- defaults
---- <FileName>.php (Example: odata.svc.php)
--- <ControllerName>
---- <ControllerMethod> (Example: index.php or show.php for the index or show method in the class)
+	- tempaltes
+	- defaults
+		- <FileName>.php (Example: odata.svc.php)
+	- <ControllerName>
+		- <ControllerMethod> (Example: index.php or show.php for the index or show method in the class)
